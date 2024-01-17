@@ -1,6 +1,6 @@
 # Go Webserver Project
 
-Dit is een Dynamic Website gebasseerd op Golang dit is gemaakt voor het Vakantiepark Fonteyn. In de Read me file wordt vertelt wat je moet doen als er een fout code komt. (dit kan altijd bewerkt worden.) 
+Dit is een Dynamic Website gebasseerd op Golang dit is gemaakt voor het Vakantiepark Fonteyn.
 
 ## Aan de slag
 
