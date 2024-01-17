@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Fonteyn </title>
+    <link rel="stylesheet" href="/static/stylesheet.css" type="text/css">
+
+</head>
+
+<body>
+    <div class="banner">
+        <div class="navbar">
+            <img src="/static/logo.png" class="logo">
+            <ul>
+                <li> <a href="/">Home pagina</a></li>
+                <li> <a href="/Aanvraag">Aanvraag</a></li>
+                <li> <a href="/Overons">Over Ons</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>Reservering</h1>
+            <form action="/Aanvraag/reservering/" method="POST" onsubmit="return validateForm()">
+                <style>
+                    input:invalid {
+                        border: 1px solid red;
+                    }
+
+                    input:valid {
+                        border: 1px solid black;
+                    }
+                </style>
+                <input type="checkbox" name="already_have_account" id="already_have_account_checkbox">
+                <label for="already_have_account_checkbox">Already have an account</label><br />
+
+                <div id="existing_account_fields" style="display:none;">
+                    <!-- Additional text boxes for existing account -->
+                    <label>Email:</label><br />
+                    <input type="email" name="email_existing" id="email_existing"><br />
+
+                    <label>Password:</label><br />
+                    <input type="password" name="password_exisisting" id="password_exisisting"><br />
+                </div>
+                <input type="checkbox" name="create_account" id="create_account_checkbox">
+                <label for="create_account_checkbox">Create an Account</label><br />
+
+                <div id="account_fields" style="display:none;">
+                    <!-- Additional text boxes for account creation -->
+                    <label>First name:</label><br />
+                    <input type="text" id="first_name" name="first_name"><br />
+
+                    <label>Last name:</label><br />
+                    <input type="text" id="last_name" name="last_name"><br />
+
+                    <label>Email:</label><br />
+                    <input type="email" id="email" name="email"><br />
+
+                    <label>Password:</label><br />
+                    <input type="password" id="password" name="password"><br />
+
+                    <label>Confirm Password:</label><br />
+                    <input type="password" id="confirm_password" name="confirm_password"><br />
+
+                    <label for="phone">Phone Number:</label><br />
+                    <input type="tel" id="phone" name="phone"><br />
+
+                    <label for="country">Country:</label><br />
+                    <input type="text" id="country" name="country"><br />
+
+                    <label for="postalcode">Postal Code:</label><br />
+                    <input type="text" id="postalcode" name="postalcode"><br />
+
+                    <label for="city">City:</label><br />
+                    <input type="text" id="city" name="city"><br />
+
+                    <label for="street">Street:</label><br />
+                    <input type="text" id="street" name="street"><br />
+
+                    <label for="house_number">House Number:</label><br />
+                    <input type="text" id="house_number" name="house_number"><br />
+
+                    <label for="birthdate">Birthdate:</label><br />
+                    <input type="date" id="birthdate" name="birthdate"><br />
+
+                    <label for="licenseplate">License Plate:</label><br />
+                    <input type="text" id="licenseplate" name="licenseplate"><br />
+
+                </div>
+
+                <label>Check-in Date:</label><br />
+                <input type="date" id="checkin" name="checkin" required><br />
+
+                <label>Check-out Date:</label><br />
+                <input type="date" id="checkout" name="checkout" required><br />
+
+                <label for="house_number_park">Park house Number:</label><br />
+                <input type="number" id="house_number_park" name="house_number_park" min="1" max="70" required><br />
+
+                <script>
+                    function validateForm() {
+                        var createAccountCheckbox = document.getElementById('create_account_checkbox');
+                        var alreadyHaveAccountCheckbox = document.getElementById('already_have_account_checkbox');
+                        var password = document.getElementById('password');
+                        var confirmPassword = document.getElementById('confirm_password');
+                        var createAccountFields = document.getElementById('account_fields');
+                
+                        if (!createAccountCheckbox.checked && !alreadyHaveAccountCheckbox.checked) {
+                            alert("Please select either 'Create an Account' or 'Already have an Account'.");
+                            return false;
+                        }
+                
+                        if (createAccountCheckbox.checked && alreadyHaveAccountCheckbox.checked) {
+                            alert("Please don't select both 'Create an Account' and 'Already have an Account'.");
+                            return false;
+                        }
+                
+                        if (createAccountCheckbox.checked && (password.value !== confirm_password.value)) {
+                            alert("Passwords do not match.");
+                            return false;
+                        }
+                
+                        return true;
+                    }
+                
+                    function toggleRequiredCreateAccount() {
+                        var createAccountCheckbox = document.getElementById('create_account_checkbox');
+                        var requiredFields = ['first_name', 'last_name', 'email', 'password', 'confirm_password', 'country', 'postalcode', 'city', 'street', 'house_number', 'birthdate', 'licenseplate'];
+                
+                        for (var i = 0; i < requiredFields.length; i++) {
+                            var field = document.getElementById(requiredFields[i]);
+                
+                            if (createAccountCheckbox.checked) {
+                                field.setAttribute('required', 'required');
+                            } else {
+                                field.removeAttribute('required');
+                            }
+                        }
+                    }
+
+                    function toggleRequiredAlreadyHaveAccount() {
+                        var createAccountCheckbox = document.getElementById('already_have_account_checkbox');
+                        var requiredFields = ['email_existing', 'password_exisisting'];
+                
+                        for (var i = 0; i < requiredFields.length; i++) {
+                            var field = document.getElementById(requiredFields[i]);
+                
+                            if (createAccountCheckbox.checked) {
+                                field.setAttribute('required', 'required');
+                            } else {
+                                field.removeAttribute('required');
+                            }
+                        }
+                    }
+                
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var createAccountCheckbox = document.getElementById('create_account_checkbox');
+                        var accountFields = document.getElementById('account_fields');
+                
+                        createAccountCheckbox.addEventListener('change', function () {
+                            accountFields.style.display = createAccountCheckbox.checked ? 'block' : 'none';
+                            toggleRequiredCreateAccount();
+                        });
+                
+                        var alreadyHaveAccountCheckbox = document.getElementById('already_have_account_checkbox');
+                        var existingAccountFields = document.getElementById('existing_account_fields');
+                
+                        alreadyHaveAccountCheckbox.addEventListener('change', function () {
+                            existingAccountFields.style.display = alreadyHaveAccountCheckbox.checked ? 'block' : 'none';
+                            toggleRequiredAlreadyHaveAccount();
+                        });
+                    });
+                </script>
+
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

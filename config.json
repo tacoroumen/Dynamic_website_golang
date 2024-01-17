@@ -1,0 +1,6 @@
+{ 
+    "server":"reserveringen.mysql.database.azure.com",
+    "usersql": "Fonteyn",
+    "password": "Proftaak02",
+    "database": "reserveringen"
+}
