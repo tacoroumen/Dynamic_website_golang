@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"git.fhict.nl/I882593/webserver/forms"
+	"github.com/tacoroumen/Dynamic_website_golang/forms"
 )
 
 const addr = ":80" // TODO Make this configurable.
